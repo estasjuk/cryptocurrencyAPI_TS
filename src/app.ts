@@ -3,7 +3,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 const cryptoRouter = require('./routes/cryptoRoutes');
-const  job = require ('./utils/cronJob');
+const  {job} = require ('./utils/cronJob');
 
 const app = express();
 

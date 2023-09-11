@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const handleMongooseError = require("../utils/handleMongooseError");
+const { handleMongooseError } = require("../utils/handleMongooseError.ts");
 
 const cryptoSchema = new Schema(
     {

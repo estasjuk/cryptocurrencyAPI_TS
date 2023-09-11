@@ -20,9 +20,9 @@ const getCrypto = async ( req: Request<
     const {symbol, market, time} = req.query;
 
     type Result = {
-        symbol: string,
-        price?: number,
-        createdAt: string,
+        symbol?: string,
+        price: number,
+        createdAt?: string,
         market?: string,
     };
 
@@ -32,7 +32,7 @@ const getCrypto = async ( req: Request<
         price: number,
         createdAt: string,
         updatedAt: string,
-        market: string,
+        market?: string,
     }[];
     
 
@@ -40,13 +40,13 @@ const getCrypto = async ( req: Request<
 
     if (!market && symbol && time) {                              // get average price
         const searchTime: string = getTimeRange(time);
-        const rawResult: RawResult[] = await Crypto.find({symbol, createdAt: {
+        const rawResult: RawResult = await Crypto.find({symbol, createdAt: {
             $gte: searchTime} 
         })
 
         const formattedRes: Result[] = rawResult.map(el => ({symbol: el.symbol, price: el.price, createdAt: el.createdAt.toString().slice(0,21)}));
 
-        const arrays: Result[][] = formattedRes.reduce((a, c) => {
+        const arrays = formattedRes.reduce((a: Result[][], c) => {
             let idx: number = a.findIndex(e => e[0].createdAt === c.createdAt);
             if (idx !== -1) a[idx].push(c);
             else a.push([c]);
@@ -58,7 +58,7 @@ const getCrypto = async ( req: Request<
             {
                 const sum = elem.reduce((total, el) => {
                 return (total + el.price)}, 0);
-            return ({symbol: elem[0].symbol, price: (sum/elem.length).toFixed(2), createdAt: elem[0].createdAt})
+            return ({symbol: elem[0].symbol, price: (sum/elem.length), createdAt: elem[0].createdAt})
             }
         );
 
@@ -75,7 +75,7 @@ const getCrypto = async ( req: Request<
             throw HttpError.NotFoundError("Data not found");
         };
 
-        const arrays = rawResult.reduce((a, c) => {
+        const arrays = rawResult.reduce((a: Result[][], c) => {
             let idx = a.findIndex(e => e[0].symbol === c.symbol);
             if (idx !== -1) a[idx].push(c);
             else a.push([c]);
@@ -86,7 +86,7 @@ const getCrypto = async ( req: Request<
                     {
                         const sum = elem.reduce((total, el) => {
                         return (total + el.price)}, 0);
-                    return ({symbol: elem[0].symbol, price: (sum/elem.length).toFixed(2), createdAt: elem[0].createdAt})
+                    return ({symbol: elem[0].symbol, price: (sum/elem.length), createdAt: elem[0].createdAt})
                     }
                 );
     }

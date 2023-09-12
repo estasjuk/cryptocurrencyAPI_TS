@@ -10,13 +10,15 @@ const {getCoinMarketCapCurrency,
 
 const addCrypto = async (): Promise<void> => {
     
-    const coinMarketCap: BaseData = await getCoinMarketCapCurrency();
+    //const coinMarketCap: BaseData = await getCoinMarketCapCurrency();
     const coinBase: BaseData = await getCoinBaseCurrency();
     const coinStats: BaseData = await getCoinStatsCurrency();
     const kucoin: BaseData = await getKucoinCurrency();
     const coinPaprika: BaseData = await getCoinPaprikaCurrency();
 
-    await Crypto.create(...coinMarketCap, ...coinBase, ...coinStats, ...kucoin, ...coinPaprika);
+    await Crypto.create(
+        //...coinMarketCap, 
+        ...coinBase, ...coinStats, ...kucoin, ...coinPaprika);
 };
 
 

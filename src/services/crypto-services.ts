@@ -1,19 +1,19 @@
 const axios = require('axios');
 import { BaseData, CoinMarketCapResponse, CoinBaseResponse, CoinStatsResponse, KucoinResponse, CoinPaprikaResponse} from "./cryptoApiTypes";
 
-const getCoinMarketCapCurrency = async () => {
-    const data: CoinMarketCapResponse = await axios.get(
-        'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
-        + '?CMC_PRO_API_KEY=bf77236a-1efa-476d-8563-1f5c26dd1aed');
+// const getCoinMarketCapCurrency = async () => {
+//     const data: CoinMarketCapResponse[] = await axios.get(
+//         'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
+//         + '?CMC_PRO_API_KEY=bf77236a-1efa-476d-8563-1f5c26dd1aed');
 
-    const baseData: BaseData = data.map(el => ({
-        symbol: el.symbol,
-        price: el.quote.USD.price,
-        market: "CoinMarketCap",
-    }));
+//     const baseData: BaseData = data.map(el => ({
+//         symbol: el.symbol,
+//         price: el.quote.USD.price,
+//         market: "CoinMarketCap",
+//     }));
 
-    return baseData;
-};
+//     return baseData;
+// };
 
 const getCoinBaseCurrency = async () => {
     const data: CoinBaseResponse = await axios.get(
@@ -33,7 +33,7 @@ const getCoinBaseCurrency = async () => {
 };
 
 const getCoinStatsCurrency = async () => {
-    const data: CoinStatsResponse = await axios.get(
+    const data: CoinStatsResponse[] = await axios.get(
         'https://api.coinstats.app/public/v1/coins',
 );
 
@@ -79,7 +79,7 @@ const getCoinPaprikaCurrency = async () => {
 };
 
 module.exports = {
-    getCoinMarketCapCurrency,
+    //getCoinMarketCapCurrency,
     getCoinBaseCurrency,
     getCoinStatsCurrency,
     getKucoinCurrency,

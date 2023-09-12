@@ -23,7 +23,7 @@ export type CoinMarketCapResponse = {
     tlv_ratio: number | null,
     last_updated: string,
     quote: any,
-}[];
+};
 
 type CoinBaseRates = {
     [key:string]: number;
@@ -59,7 +59,7 @@ export type CoinStatsResponse = {
     contractAddress: string;
     decimals?: number;
     redditUrl?: string;
-}[];
+};
 
 type KucoinRates = {
     [key:string]: number;
